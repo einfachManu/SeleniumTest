@@ -1,0 +1,9 @@
+# Abhängigkeiten
+/node_modules/
+
+# Optional: Lock‑File, wenn du es nicht versionieren möchtest
+# /package-lock.json
+
+# OS‑ und Editor‑Schnipsel
+.DS_Store
+.vscode/

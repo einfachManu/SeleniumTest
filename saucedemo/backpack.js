@@ -2,7 +2,7 @@ const { Builder, By } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
 async function helloSelenium({ item }) {
-  // 1) Chrome-Optionen
+
   const options = new chrome.Options();
   options.addArguments(
     '--disable-save-password-bubble',
@@ -11,7 +11,6 @@ async function helloSelenium({ item }) {
     '--no-sandbox',
     '--disable-dev-shm-usage',
     '--disable-infobars',
-    // Grund-User‑Agent (kann per CDP nochmal überschrieben werden)
     '--user-agent=MeinCustomUserAgent/1.0'
   );
   options.setUserPreferences({
@@ -20,13 +19,11 @@ async function helloSelenium({ item }) {
     'profile.password_manager_leak_detection': false
   });
 
-  // 2) Driver starten
   const driver = await new Builder()
     .forBrowser('chrome')
     .setChromeOptions(options)
     .build();
 
-  // 3) DevTools-Protokoll: Network aktivieren und Header setzen
   await driver.sendDevToolsCommand('Network.enable', {});
   await driver.sendDevToolsCommand('Network.setExtraHTTPHeaders', {
     headers: {
@@ -38,7 +35,6 @@ async function helloSelenium({ item }) {
     }
   });
 
-  // 4) Testablauf
   await driver.get('https://www.saucedemo.com/');
   await driver.manage().setTimeouts({ implicit: 10000 });
 
@@ -60,7 +56,6 @@ async function helloSelenium({ item }) {
 
 }
 
-// Aufruf
 helloSelenium({ item: 'add-to-cart-sauce-labs-bike-light' })
   .then(() => console.log('Test completed successfully'))
   .catch(err => console.error('Test failed:', err));
